@@ -68,6 +68,14 @@
     </footer>
 
     <script>
+        const responses = {
+            "What is IvyDegen?": "IvyDegen is a memecoin that blends Ivy League sophistication with crypto degen culture.",
+            "How can I buy IvyDegen?": "You can buy IvyDegen on Pump.fun! Follow our official links for safe transactions.",
+            "What are the tokenomics?": "IvyDegen has a total supply of 1,000,000,000 tokens, with 5% burn and 10% redistribution.",
+            "What is the roadmap?": "Our roadmap includes launch, community events, and CEX listings!",
+            "Who is behind IvyDegen?": "IvyDegen is a decentralized community project led by smart degens like you!"
+        };
+
         function sendMessage() {
             const userInput = document.getElementById("user-input").value;
             if (!userInput) return;
@@ -77,10 +85,11 @@
             userMessage.textContent = "You: " + userInput;
             chatBox.appendChild(userMessage);
             
-            // Simple AI Response (Mockup)
-            const botMessage = document.createElement("p");
-            botMessage.textContent = "IvyDegen AI: That's an interesting question!";
-            chatBox.appendChild(botMessage);
+            setTimeout(() => {
+                const botMessage = document.createElement("p");
+                botMessage.textContent = "IvyDegen AI: " + (responses[userInput] || "Wrong answer.");
+                chatBox.appendChild(botMessage);
+            }, 1000);
             
             document.getElementById("user-input").value = "";
         }
