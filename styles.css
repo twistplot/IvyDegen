@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    padding: 50px;
+    background: linear-gradient(to right, #004d00, #001f3f);
+}
+
+.logo {
+    width: 150px;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #FFD700;
+    color: black;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.tokenomics, .roadmap, .community, .price {
+    padding: 50px;
+}
+
+footer {
+    background-color: #001f3f;
+    padding: 20px;
+}
