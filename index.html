@@ -53,9 +53,38 @@
         <a href="https://x.com/IvyDegen" class="btn">Twitter</a>
     </section>
 
+    <!-- AI Chatbot -->
+    <section class="chatbot">
+        <h2>Ask IvyDegen AI</h2>
+        <div id="chat-container">
+            <div id="chat-box"></div>
+            <input type="text" id="user-input" placeholder="Ask me anything...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </section>
+
     <footer>
         <p>© 2025 IvyDegen. All rights reserved.</p>
     </footer>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
+            
+            const chatBox = document.getElementById("chat-box");
+            const userMessage = document.createElement("p");
+            userMessage.textContent = "You: " + userInput;
+            chatBox.appendChild(userMessage);
+            
+            // Simple AI Response (Mockup)
+            const botMessage = document.createElement("p");
+            botMessage.textContent = "IvyDegen AI: That's an interesting question!";
+            chatBox.appendChild(botMessage);
+            
+            document.getElementById("user-input").value = "";
+        }
+    </script>
 
 </body>
 </html>
