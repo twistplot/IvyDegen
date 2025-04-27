@@ -6,6 +6,8 @@
     <title>IvyDegen ($IVYD) - Smartest Memecoin</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.5/web3.min.js"></script>
+    <!-- Add Solana Web3.js for Phantom -->
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -16,9 +18,11 @@
         <h1>Welcome to IvyDegen ($IVYD)</h1>
         <p>Where High IQ Meets High ROI</p>
         <a href="https://pump.fun" class="btn">Buy on Pump.fun</a>
-        <button onclick="connectWallet()" class="btn">Connect Wallet</button>
+        <button onclick="connectWallet()" class="btn" id="walletButton">Connect Wallet</button>
+        <div id="walletAddress" style="display:none; margin-top:10px; word-break:break-all;"></div>
     </header>
 
+    <!-- Rest of your HTML remains the same... -->
     <!-- About Section -->
     <section class="about">
         <h2>About IvyDegen</h2>
@@ -68,6 +72,55 @@
     </footer>
 
     <script>
+        // Wallet Connection Functionality
+        let walletConnected = false;
+        let publicKey = null;
+
+        async function connectWallet() {
+            try {
+                const { solana } = window;
+                
+                if (solana && solana.isPhantom) {
+                    console.log('Phantom wallet found!');
+                    
+                    // Connect to wallet
+                    const response = await solana.connect();
+                    publicKey = response.publicKey.toString();
+                    console.log('Connected with Public Key:', publicKey);
+                    
+                    // Update UI
+                    document.getElementById('walletButton').textContent = 'Disconnect Wallet';
+                    document.getElementById('walletAddress').textContent = `Connected: ${publicKey.substring(0, 4)}...${publicKey.substring(publicKey.length - 4)}`;
+                    document.getElementById('walletAddress').style.display = 'block';
+                    walletConnected = true;
+                    
+                    // You can now use the publicKey for transactions
+                } else {
+                    alert('Phantom wallet not found! Please install it from https://phantom.app/');
+                    window.open('https://phantom.app/', '_blank');
+                }
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                alert('Failed to connect wallet. Please try again.');
+            }
+        }
+
+        // Add event listener for wallet disconnect
+        window.addEventListener('load', function() {
+            const { solana } = window;
+            
+            if (solana && solana.isPhantom) {
+                solana.on('disconnect', () => {
+                    console.log('Wallet disconnected');
+                    document.getElementById('walletButton').textContent = 'Connect Wallet';
+                    document.getElementById('walletAddress').style.display = 'none';
+                    walletConnected = false;
+                    publicKey = null;
+                });
+            }
+        });
+
+        // Chatbot functionality (existing code)
         const responses = {
             "What is IvyDegen?": "IvyDegen is a memecoin that blends Ivy League sophistication with crypto degen culture.",
             "How can I buy IvyDegen?": "You can buy IvyDegen on Pump.fun! Follow our official links for safe transactions.",
@@ -87,7 +140,7 @@
             
             setTimeout(() => {
                 const botMessage = document.createElement("p");
-                botMessage.textContent = "IvyDegen AI: " + (responses[userInput] || "Wrong answer.");
+                botMessage.textContent = "IvyDegen AI: " + (responses[userInput] || "I'm not sure about that. Ask me something else!");
                 chatBox.appendChild(botMessage);
             }, 1000);
             
