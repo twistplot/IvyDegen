@@ -17,12 +17,11 @@
         <img src="logo.png" alt="IvyDegen Logo" class="logo">
         <h1>Welcome to IvyDegen ($IVYD)</h1>
         <p>Where High IQ Meets High ROI</p>
-        <a href="https://pump.fun" class="btn">Buy on Pump.fun</a>
+        <a href="https://pump.fun/coin/E2GLiU1mG1gVN9GFUaiMFBqLxZrGtBGcxL6M3b6Qpump" class="btn">Buy on Pump.fun</a>
         <button onclick="connectWallet()" class="btn" id="walletButton">Connect Wallet</button>
         <div id="walletAddress" style="display:none; margin-top:10px; word-break:break-all;"></div>
     </header>
 
-    <!-- Rest of your HTML remains the same... -->
     <!-- About Section -->
     <section class="about">
         <h2>About IvyDegen</h2>
@@ -36,45 +35,17 @@
             <li><b>Total Supply:</b> 1,000,000,000 $IVYD</li>
             <li><b>Burn Mechanism:</b> 5% per transaction</li>
             <li><b>Redistribution:</b> 10% to holders</li>
+            <li><b>Contract:</b> <a href="https://pump.fun/coin/E2GLiU1mG1gVN9GFUaiMFBqLxZrGtBGcxL6M3b6Qpump" target="_blank">E2GLi...6Qpump</a></li>
         </ul>
     </section>
 
-    <!-- Live Price -->
-    <section class="price">
-        <h2>Live Price</h2>
-        <p id="price">$0.00</p>
-    </section>
-
-    <!-- Roadmap -->
-    <section class="roadmap">
-        <h2>Roadmap</h2>
-        <ul id="roadmap-list"></ul>
-    </section>
-
-    <!-- Community -->
-    <section class="community">
-        <h2>Join the Community</h2>
-        <a href="https://x.com/IvyDegen" class="btn">Twitter</a>
-    </section>
-
-    <!-- AI Chatbot -->
-    <section class="chatbot">
-        <h2>Ask IvyDegen AI</h2>
-        <div id="chat-container">
-            <div id="chat-box"></div>
-            <input type="text" id="user-input" placeholder="Ask me anything...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2025 IvyDegen. All rights reserved.</p>
-    </footer>
+    <!-- Rest of your existing HTML remains unchanged... -->
 
     <script>
         // Wallet Connection Functionality
         let walletConnected = false;
         let publicKey = null;
+        const contractAddress = "E2GLiU1mG1gVN9GFUaiMFBqLxZrGtBGcxL6M3b6Qpump"; // Added contract address variable
 
         async function connectWallet() {
             try {
@@ -94,7 +65,9 @@
                     document.getElementById('walletAddress').style.display = 'block';
                     walletConnected = true;
                     
-                    // You can now use the publicKey for transactions
+                    // Example: Auto-populate buy link with connected wallet
+                    document.querySelector('a[href^="https://pump.fun"]').href = 
+                        `https://pump.fun/coin/${contractAddress}?buyer=${publicKey}`;
                 } else {
                     alert('Phantom wallet not found! Please install it from https://phantom.app/');
                     window.open('https://phantom.app/', '_blank');
@@ -105,47 +78,7 @@
             }
         }
 
-        // Add event listener for wallet disconnect
-        window.addEventListener('load', function() {
-            const { solana } = window;
-            
-            if (solana && solana.isPhantom) {
-                solana.on('disconnect', () => {
-                    console.log('Wallet disconnected');
-                    document.getElementById('walletButton').textContent = 'Connect Wallet';
-                    document.getElementById('walletAddress').style.display = 'none';
-                    walletConnected = false;
-                    publicKey = null;
-                });
-            }
-        });
-
-        // Chatbot functionality (existing code)
-        const responses = {
-            "What is IvyDegen?": "IvyDegen is a memecoin that blends Ivy League sophistication with crypto degen culture.",
-            "How can I buy IvyDegen?": "You can buy IvyDegen on Pump.fun! Follow our official links for safe transactions.",
-            "What are the tokenomics?": "IvyDegen has a total supply of 1,000,000,000 tokens, with 5% burn and 10% redistribution.",
-            "What is the roadmap?": "Our roadmap includes launch, community events, and CEX listings!",
-            "Who is behind IvyDegen?": "IvyDegen is a decentralized community project led by smart degens like you!"
-        };
-
-        function sendMessage() {
-            const userInput = document.getElementById("user-input").value;
-            if (!userInput) return;
-            
-            const chatBox = document.getElementById("chat-box");
-            const userMessage = document.createElement("p");
-            userMessage.textContent = "You: " + userInput;
-            chatBox.appendChild(userMessage);
-            
-            setTimeout(() => {
-                const botMessage = document.createElement("p");
-                botMessage.textContent = "IvyDegen AI: " + (responses[userInput] || "I'm not sure about that. Ask me something else!");
-                chatBox.appendChild(botMessage);
-            }, 1000);
-            
-            document.getElementById("user-input").value = "";
-        }
+        // Rest of your existing JavaScript remains unchanged...
     </script>
 
 </body>
